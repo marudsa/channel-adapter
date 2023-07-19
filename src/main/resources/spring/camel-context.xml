@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd                         http://camel.apache.org/schema/spring https://camel.apache.org/schema/spring/camel-spring.xsd">
+    <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+        <!-- Configuración del endpoint HTTP utilizando Jetty -->
+        <route id="_route1">
+            <from id="_from1" uri="jetty:http://localhost:3000/mock-endpoint"/>
+            <bean id="_bean1" method="sendMessage" ref="queueProducer"/>
+            <log id="_log1" message=">>> ${body}"/>
+            <bean id="_bean2" method="process" ref="responseProcessor"/>
+        </route>
+    </camelContext>
+</beans>
